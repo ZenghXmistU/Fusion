@@ -24,7 +24,7 @@ class Constants:
 		('Academics', 'Academics'),
 		('IIITDMJ', 'IIITDMJ'),
 		('Life-Relationship-and-Self', 'Life Relationship and Self'),
-		('Technology-and-Education', 'Technology and Education'),       
+		('Technology-and-Education', 'Technology and Education'),
 		('Programmes', 'Programmes'),
 		('Others', 'Others'),
 		('Design', 'Design'),
@@ -184,7 +184,7 @@ class AskaQuestion(models.Model):
 
 	def total_likes(self):
 		return self.likes.count()
-	
+
 	def total_dislikes(self):
 		return self.dislikes.count()
 
@@ -196,7 +196,7 @@ class AskaQuestion(models.Model):
 		markdown_text = markdown(content)
 		markdown_text = mark_safe(markdown_text)
 		return markdown_text
-			
+
 	def __str__(self):
 		return '{} added ----> {} in {}'.format(self.user, self.subject, self.select_tag)
 
@@ -213,7 +213,7 @@ class AnsweraQuestion(models.Model):
 
 	def total_likes(self):
 		return self.likes.count()
-	
+
 	def total_votes(self):
 		return self.likes.count() - self.dislikes.count()
 
@@ -222,7 +222,7 @@ class AnsweraQuestion(models.Model):
 
 	def total_requests(self):
 		return self.requests.count()
-		
+
 	def __str__(self):
 		return '{} - answered the question - {}'.format(self.content, self.question)
 
@@ -311,12 +311,11 @@ class Roles(models.Model):
 	 return '%s is assigned %s role' % (self.user, self.role)
 
 class QuestionAccessControl(models.Model):
-	question = models.ForeignKey(AskaQuestion, related_name='question_list', default=1, on_delete=models.CASCADE)
-	canVote = models.BooleanField()
-	canAnswer = models.BooleanField()
-	canComment = models.BooleanField()
+	Question = models.ForeignKey(AskaQuestion, related_name='question_list', default=1, on_delete=models.CASCADE)
+	can_vote = models.BooleanField()
+	can_answer = models.BooleanField()
+	can_comment = models.BooleanField()
 	posted_by = models.ForeignKey(Roles, default=1, on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=False, auto_now=False, default=timezone.now)
 	def __str__(self):
-		return "question number " + str(self.question.id)
-	
+		return "question number " + str(self.Question.id)
